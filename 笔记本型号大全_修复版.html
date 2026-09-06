@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>数码杂谈君 · 笔记本型号大全</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:        #1B0E44;
+    --primary:    #6A2BE9;
+    --lavender:   #E5DFFB;
+    --violet-tint:#D3BBF4;
+    --paper:      #F3F0FB;
+    --card:       #FFFFFF;
+    --muted:      rgba(27,14,68,.55);
+    --line:       rgba(27,14,68,.14);
+    --green:      #10B981;
+    --red:        #EF4444;
+    --serif-latin:'Bricolage Grotesque';
+    --mono:'JetBrains Mono', ui-monospace, monospace;
+    --cn:'PingFang SC','Hiragino Sans GB','Microsoft YaHei','Noto Sans SC',sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--serif-latin), var(--cn);
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  ::selection{background:var(--primary);color:#fff}
+  .wrap{max-width:1200px;margin:0 auto;padding:0 28px}
+  .topbar{
+    display:flex;justify-content:space-between;align-items:baseline;
+    padding:22px 0 14px;border-bottom:1.5px solid var(--ink);
+    font-family:var(--mono);font-size:12px;letter-spacing:.06em;
+  }
+  .topbar .brand{font-weight:700}
+  .topbar .issue{color:var(--muted)}
+  .topbar .issue b{color:var(--primary);font-weight:700}
+  .masthead{padding:48px 0 40px;position:relative}
+  .masthead .kicker{
+    font-family:var(--mono);font-size:13px;letter-spacing:.28em;
+    color:var(--primary);margin-bottom:18px;display:flex;align-items:center;gap:14px;
+  }
+  .masthead .kicker::after{content:'';flex:1;height:1px;background:var(--line)}
+  .masthead h1{
+    font-size:clamp(42px,7vw,96px);
+    font-weight:800;line-height:.98;letter-spacing:-.01em;
+    color:var(--ink);
+  }
+  .masthead h1 .dot{color:var(--primary)}
+  .masthead .sub{
+    margin-top:18px;display:flex;flex-wrap:wrap;gap:10px 28px;
+    font-size:14px;color:var(--muted);font-family:var(--cn);
+  }
+  .masthead .sub b{color:var(--ink);font-weight:600}
+  .search-bar{
+    display:flex;gap:12px;flex-wrap:wrap;align-items:center;
+    padding:20px 0;border-top:1.5px solid var(--ink);border-bottom:1.5px solid var(--ink);
+  }
+  .search-input{
+    flex:1;min-width:240px;background:var(--card);border:1.5px solid var(--ink);
+    border-radius:12px;padding:12px 16px;font-family:var(--cn);font-size:14px;
+    outline:none;transition:border-color .2s;
+  }
+  .search-input:focus{border-color:var(--primary)}
+  .search-input::placeholder{color:var(--muted)}
+  .filter-btn{
+    padding:10px 18px;border-radius:999px;border:1.5px solid var(--ink);
+    background:var(--card);font-family:var(--cn);font-size:13px;cursor:pointer;
+    transition:all .2s;white-space:nowrap;
+  }
+  .filter-btn:hover, .filter-btn.active{
+    background:var(--primary);color:#fff;border-color:var(--primary);
+  }
+  .filter-btn.active{box-shadow:4px 4px 0 var(--violet-tint)}
+  .mode-btn{
+    padding:10px 18px;border-radius:999px;border:1.5px solid var(--ink);
+    background:var(--card);font-family:var(--cn);font-size:13px;cursor:pointer;
+    transition:all .2s;white-space:nowrap;
+  }
+  .mode-btn:hover{background:var(--ink);color:#fff}
+  .mode-btn.active{background:var(--primary);color:#fff;border-color:var(--primary);box-shadow:4px 4px 0 var(--violet-tint)}
+  .stats-bar{
+    display:flex;gap:32px;padding:16px 0;font-family:var(--mono);font-size:12px;color:var(--muted);
+    border-bottom:1px solid var(--line);
+  }
+  .stats-bar b{color:var(--primary);font-size:15px;margin-right:4px}
+  .laptop-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(320px, 1fr));
+    gap:24px;padding:32px 0;
+  }
+  .laptop-card{
+    background:var(--card);border:1.5px solid var(--ink);border-radius:20px;
+    overflow:hidden;position:relative;
+    box-shadow:6px 6px 0 var(--violet-tint);
+    transition:transform .35s cubic-bezier(.22,1,.36,1), box-shadow .35s;
+  }
+  .laptop-card:hover{
+    transform:translate(-3px,-3px);
+    box-shadow:10px 10px 0 var(--violet-tint);
+  }
+  .laptop-card.selected{
+    border-color:var(--primary);
+    box-shadow:6px 6px 0 var(--primary);
+  }
+  .card-tags{
+    position:absolute;top:14px;left:14px;display:flex;gap:6px;z-index:3;
+  }
+  .tag-new{
+    background:var(--primary);color:#fff;padding:4px 10px;border-radius:999px;
+    font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.08em;
+  }
+  .tag-drop{
+    background:var(--red);color:#fff;padding:4px 10px;border-radius:999px;
+    font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.08em;
+  }
+  .card-img{
+    height:200px;background:linear-gradient(135deg, #E5DFFB 0%, #D3BBF4 50%, #C4B5E0 100%);
+    display:flex;align-items:center;justify-content:center;
+    position:relative;overflow:hidden;
+  }
+  .card-img img{
+    width:85%;height:85%;object-fit:contain;
+    filter:drop-shadow(0 8px 16px rgba(27,14,68,.25));
+    transition:transform .5s cubic-bezier(.22,1,.36,1);
+  }
+  .laptop-card:hover .card-img img{
+    transform:scale(1.08) translateY(-4px);
+  }
+  .card-img .img-fallback{
+    font-size:64px;opacity:.6;display:none;
+  }
+  .card-body{padding:18px 20px 16px}
+  .card-brand{
+    font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--primary);font-weight:700;
+    margin-bottom:4px;
+  }
+  .card-model{
+    font-size:17px;font-weight:800;line-height:1.3;margin-bottom:10px;font-family:var(--cn);
+  }
+  .card-price-row{
+    display:flex;align-items:baseline;gap:10px;margin-bottom:12px;
+  }
+  .card-price{
+    font-family:var(--mono);font-size:24px;font-weight:700;color:var(--primary);
+  }
+  .card-old-price{
+    font-family:var(--mono);font-size:14px;color:var(--muted);text-decoration:line-through;
+  }
+  .card-specs{
+    display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px;
+  }
+  .spec-pill{
+    background:rgba(106,43,233,.08);border:1px solid rgba(106,43,233,.15);
+    padding:4px 10px;border-radius:8px;font-size:11.5px;font-family:var(--cn);color:var(--ink);
+  }
+  .card-actions{
+    display:flex;gap:8px;
+  }
+  .btn-detail, .btn-compare{
+    flex:1;padding:9px 0;border-radius:10px;border:1.5px solid var(--ink);
+    background:var(--card);font-family:var(--cn);font-size:13px;cursor:pointer;
+    transition:all .2s;text-align:center;
+  }
+  .btn-detail:hover{background:var(--ink);color:#fff}
+  .btn-compare:hover, .btn-compare.selected{
+    background:var(--primary);color:#fff;border-color:var(--primary);
+  }
+  .card-detail{
+    max-height:0;overflow:hidden;transition:max-height .5s cubic-bezier(.22,1,.36,1), opacity .3s;
+    opacity:0;border-top:1px solid var(--line);
+  }
+  .card-detail.open{
+    max-height:600px;opacity:1;
+  }
+  .detail-inner{padding:16px 20px 20px}
+  .detail-grid{
+    display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;
+  }
+  .detail-item{
+    background:var(--paper);border-radius:10px;padding:10px 12px;
+  }
+  .detail-item .label{
+    font-family:var(--mono);font-size:10px;letter-spacing:.06em;color:var(--muted);margin-bottom:3px;
+  }
+  .detail-item .value{font-size:12.5px;font-family:var(--cn);font-weight:600}
+  .detail-pros-cons{
+    display:grid;grid-template-columns:1fr 1fr;gap:10px;
+  }
+  .pros-box, .cons-box{
+    border-radius:10px;padding:12px;
+  }
+  .pros-box{background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.2)}
+  .cons-box{background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.15)}
+  .pros-box .ttl{color:var(--green);font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.08em;margin-bottom:6px}
+  .cons-box .ttl{color:var(--red);font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.08em;margin-bottom:6px}
+  .pros-box li, .cons-box li{font-size:12px;font-family:var(--cn);color:var(--ink);margin-bottom:3px;list-style:none}
+  .pros-box li::before{content:"✓ ";color:var(--green);font-weight:700}
+  .cons-box li::before{content:"✗ ";color:var(--red);font-weight:700}
+  .compare-bar{
+    position:sticky;bottom:20px;z-index:50;
+    background:var(--ink);color:#fff;border-radius:16px;
+    padding:16px 24px;margin:0 28px;
+    box-shadow:0 12px 40px rgba(27,14,68,.35);
+    display:none;align-items:center;justify-content:space-between;gap:16px;
+  }
+  .compare-bar.show{display:flex}
+  .compare-bar .info{font-family:var(--cn);font-size:14px}
+  .compare-bar .info b{color:var(--violet-tint)}
+  .compare-bar .chips{display:flex;gap:8px;flex-wrap:wrap}
+  .compare-chip{
+    background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);
+    padding:6px 14px;border-radius:999px;font-size:12px;font-family:var(--cn);
+  }
+  .compare-actions{display:flex;gap:8px}
+  .btn-go{
+    padding:8px 20px;border-radius:999px;border:none;
+    background:var(--primary);color:#fff;font-family:var(--cn);font-size:13px;cursor:pointer;
+    transition:background .2s;
+  }
+  .btn-go:hover{background:#5B21B6}
+  .btn-clear{
+    padding:8px 16px;border-radius:999px;border:1px solid rgba(255,255,255,.3);
+    background:transparent;color:#fff;font-family:var(--cn);font-size:13px;cursor:pointer;
+    transition:background .2s;
+  }
+  .btn-clear:hover{background:rgba(255,255,255,.1)}
+  .modal-overlay{
+    position:fixed;inset:0;z-index:100;
+    background:rgba(27,14,68,.85);backdrop-filter:blur(8px);
+    display:none;align-items:center;justify-content:center;padding:20px;
+  }
+  .modal-overlay.show{display:flex}
+  .modal-box{
+    background:var(--card);border:1.5px solid var(--ink);border-radius:24px;
+    max-width:900px;width:100%;max-height:90vh;overflow:auto;
+    box-shadow:12px 12px 0 var(--violet-tint);
+  }
+  .modal-header{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:20px 24px;border-bottom:1.5px solid var(--ink);position:sticky;top:0;background:var(--card);z-index:2;
+  }
+  .modal-header h2{font-size:20px;font-weight:800;font-family:var(--cn)}
+  .modal-close{
+    width:36px;height:36px;border-radius:10px;border:1.5px solid var(--ink);
+    background:var(--card);cursor:pointer;font-size:18px;transition:all .2s;
+  }
+  .modal-close:hover{background:var(--ink);color:#fff}
+  .modal-body{padding:24px}
+  .compare-table{width:100%;border-collapse:collapse}
+  .compare-table th, .compare-table td{
+    padding:14px 16px;text-align:left;font-family:var(--cn);font-size:13px;
+    border-bottom:1px solid var(--line);
+  }
+  .compare-table th{
+    font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--muted);
+    font-weight:700;text-transform:uppercase;
+    background:var(--paper);
+    position:sticky;top:58px;
+  }
+  .compare-table td.name-cell{font-weight:800;font-size:15px}
+  .compare-table td.price-cell{font-family:var(--mono);font-size:18px;font-weight:700;color:var(--primary)}
+  .compare-table tr:hover td{background:rgba(106,43,233,.04)}
+  .better-a{background:rgba(16,185,129,.1)}
+  .better-b{background:rgba(16,185,129,.1)}
+  .no-result{
+    text-align:center;padding:80px 20px;display:none;
+  }
+  .no-result.show{display:block}
+  .no-result .emoji{font-size:48px;margin-bottom:12px}
+  .no-result p{font-size:15px;color:var(--muted);font-family:var(--cn)}
+  .update-tip{
+    background:var(--card);border:1.5px solid var(--ink);border-radius:16px;
+    padding:20px 24px;margin-bottom:24px;
+    box-shadow:4px 4px 0 var(--violet-tint);
+  }
+  .update-tip h3{font-size:15px;font-weight:800;margin-bottom:8px;font-family:var(--cn)}
+  .update-tip p{font-size:13px;color:var(--muted);font-family:var(--cn);line-height:1.7}
+  .update-tip code{
+    background:rgba(106,43,233,.1);color:var(--primary);padding:2px 6px;border-radius:4px;
+    font-family:var(--mono);font-size:11px;
+  }
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity .8s ease,transform .8s cubic-bezier(.22,1,.36,1)}
+  .reveal.in{opacity:1;transform:none}
+  @media (max-width:880px){
+    .laptop-grid{grid-template-columns:1fr}
+    .search-bar{flex-direction:column;align-items:stretch}
+    .search-input{width:100%}
+    .compare-bar{flex-direction:column;align-items:stretch;margin:0 12px}
+    .compare-bar .chips{justify-content:center}
+  }
+  @media (max-width:560px){
+    .wrap{padding:0 16px}
+    .detail-grid{grid-template-columns:1fr}
+    .detail-pros-cons{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="topbar">
+    <span class="brand">数码杂谈君 · 笔记本型号大全</span>
+    <span class="issue">实时更新 · <b id="updateDate">--</b></span>
+  </div>
+
+  <header class="masthead">
+    <div class="kicker">LAPTOP&nbsp;DATABASE</div>
+    <h1>笔记本大全<span class="dot">.</span></h1>
+    <div class="sub">
+      <span>覆盖品牌：<b id="brandCount">--</b> 个</span>
+      <span>收录型号：<b id="modelCount">--</b> 款</span>
+      <span>最后更新：<b id="lastUpdate">--</b></span>
+    </div>
+  </header>
+
+  <div class="update-tip reveal">
+    <h3>📝 如何更新数据</h3>
+    <p>方式一：把新品链接或参数发给我，我生成新代码给你替换。<br>
+    方式二：用记事本打开本文件，找到 <code>const DATA = {</code> 这一段，照着格式添加新品数据即可。</p>
+  </div>
+
+  <div class="search-bar reveal">
+    <input type="text" class="search-input" id="searchInput" placeholder="搜索型号、品牌、CPU、显卡...">
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="filter-btn active" data-brand="all">全部</button>
+      <button class="filter-btn" data-brand="联想">联想</button>
+      <button class="filter-btn" data-brand="华硕">华硕</button>
+      <button class="filter-btn" data-brand="机械革命">机械革命</button>
+      <button class="filter-btn" data-brand="小米">小米</button>
+      <button class="filter-btn" data-brand="惠普">惠普</button>
+      <button class="filter-btn" data-brand="华为">华为</button>
+      <button class="filter-btn" data-brand="Apple">Apple</button>
+    </div>
+    <button class="mode-btn" id="compareModeBtn">⚖️ 对比模式</button>
+  </div>
+
+  <div class="stats-bar">
+    <span>当前显示 <b id="showCount">--</b> 款</span>
+    <span>新品 <b id="newCount">--</b> 款</span>
+    <span>降价中 <b id="dropCount">--</b> 款</span>
+  </div>
+
+  <div class="laptop-grid" id="laptopGrid"></div>
+  <div class="no-result" id="noResult">
+    <div class="emoji">🔍</div>
+    <p>没有找到匹配的笔记本，换个关键词试试</p>
+  </div>
+</div>
+
+<div class="compare-bar" id="compareBar">
+  <div class="info">已选择 <b id="compareNum">0</b> / 2 款</div>
+  <div class="chips" id="compareChips"></div>
+  <div class="compare-actions">
+    <button class="btn-clear" id="clearCompareBtn">清空</button>
+    <button class="btn-go" id="doCompareBtn">开始对比</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h2>⚖️ 参数对比</h2>
+      <button class="modal-close" id="modalCloseBtn">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<script>
+var DATA = {
+  updateDate: "2026-09-06",
+  laptops: [
+    {
+      id: 1, brand: "联想", model: "拯救者 Y9000P 2026", price: 10499, oldPrice: 10999, isNew: true,
+      category: "游戏本", cpu: "Intel i9-14900HX", gpu: "RTX 4070 8GB", ram: "32GB DDR5",
+      storage: "1TB PCIe 4.0", screen: "16英寸 2.5K 240Hz 500nit", battery: "80Wh",
+      weight: "2.55kg", thickness: "26.8mm", ports: "USB-C×2, USB-A×3, HDMI 2.1, RJ45",
+      releaseDate: "2026-03", pros: ["性能释放激进", "屏幕素质优秀", "接口丰富"],
+      cons: ["机身较重", "高负载噪音大"],
+      image: "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=600&h=400&fit=crop"
+    },
+    {
+      id: 2, brand: "华硕", model: "天选5 Pro", price: 8299, oldPrice: null, isNew: true,
+      category: "游戏本", cpu: "AMD R9-7940HX", gpu: "RTX 4060 8GB", ram: "16GB DDR5",
+      storage: "512GB PCIe 4.0", screen: "16英寸 2.5K 165Hz 100% DCI-P3", battery: "90Wh",
+      weight: "2.2kg", thickness: "22.4mm", ports: "USB-C×2, USB-A×2, HDMI 2.1",
+      releaseDate: "2026-02", pros: ["二次元外观独特", "续航较好", "相对轻薄"],
+      cons: ["方向键半高", "屏幕亮度一般"],
+      image: "https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?w=600&h=400&fit=crop"
+    },
+    {
+      id: 3, brand: "机械革命", model: "极光X", price: 6999, oldPrice: 7499, isNew: false,
+      category: "游戏本", cpu: "Intel i7-14650HX", gpu: "RTX 4060 8GB", ram: "16GB DDR5",
+      storage: "1TB PCIe 4.0", screen: "16英寸 2.5K 165Hz 100% sRGB", battery: "60Wh",
+      weight: "2.4kg", thickness: "24mm", ports: "USB-C×2, USB-A×3, HDMI 2.1, miniDP",
+      releaseDate: "2025-11", pros: ["性价比极高", "性能释放不错", "屏幕素质好"],
+      cons: ["品牌售后一般", "机身质感一般", "电池较小"],
+      image: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=600&h=400&fit=crop"
+    },
+    {
+      id: 4, brand: "小米", model: "Redmi G Pro 2026", price: 8999, oldPrice: null, isNew: true,
+      category: "游戏本", cpu: "Intel i7-14650HX", gpu: "RTX 4060 8GB", ram: "16GB DDR5",
+      storage: "512GB PCIe 4.0", screen: "16英寸 2.5K 240Hz 500nit HDR400", battery: "80Wh",
+      weight: "2.7kg", thickness: "28mm", ports: "USB-C×2, USB-A×3, HDMI 2.1, SD卡槽",
+      releaseDate: "2026-01", pros: ["小米生态联动", "屏幕素质优秀", "接口齐全"],
+      cons: ["机身厚重", "高负载风扇吵"],
+      image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=600&h=400&fit=crop"
+    },
+    {
+      id: 5, brand: "惠普", model: "暗影精灵10", price: 7799, oldPrice: 8299, isNew: false,
+      category: "游戏本", cpu: "Intel i7-14700HX", gpu: "RTX 4060 8GB", ram: "16GB DDR5",
+      storage: "1TB PCIe 4.0", screen: "16.1英寸 FHD 165Hz 100% sRGB", battery: "83Wh",
+      weight: "2.4kg", thickness: "23.5mm", ports: "USB-C×2, USB-A×3, HDMI 2.1, RJ45",
+      releaseDate: "2025-10", pros: ["一线品牌售后好", "散热不错", "键盘手感好"],
+      cons: ["屏幕分辨率偏低", "下巴较宽"],
+      image: "https://images.unsplash.com/photo-1544731612-de7f96afe55f?w=600&h=400&fit=crop"
+    },
+    {
+      id: 6, brand: "联想", model: "小新Pro16 2026", price: 5999, oldPrice: 6299, isNew: true,
+      category: "轻薄本", cpu: "Intel Ultra 7 155H", gpu: "核显 Arc", ram: "32GB LPDDR5x",
+      storage: "1TB PCIe 4.0", screen: "16英寸 2.5K 120Hz 100% sRGB", battery: "84Wh",
+      weight: "1.91kg", thickness: "17.5mm", ports: "雷电4×1, USB-C×1, USB-A×2, HDMI 2.0",
+      releaseDate: "2026-02", pros: ["大屏轻薄", "续航优秀", "办公性能强"],
+      cons: ["无独显", "机身刚性一般"],
+      image: "https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=600&h=400&fit=crop"
+    },
+    {
+      id: 7, brand: "华为", model: "MateBook X Pro 2026", price: 12499, oldPrice: null, isNew: true,
+      category: "轻薄本", cpu: "Intel Ultra 9 185H", gpu: "核显 Arc", ram: "32GB LPDDR5x",
+      storage: "1TB PCIe 4.0", screen: "14.2英寸 3.1K 120Hz OLED 触控", battery: "70Wh",
+      weight: "980g", thickness: "13.5mm", ports: "雷电4×2, USB-C×1",
+      releaseDate: "2026-03", pros: ["极致轻薄", "屏幕顶级", "华为生态"],
+      cons: ["价格贵", "接口极少", "高负载发热"],
+      image: "https://images.unsplash.com/photo-1587560699334-cc4ff634909a?w=600&h=400&fit=crop"
+    },
+    {
+      id: 8, brand: "Apple", model: "MacBook Pro 14 M4", price: 12999, oldPrice: 14999, isNew: false,
+      category: "轻薄本", cpu: "Apple M4 10核", gpu: "M4 10核GPU", ram: "16GB 统一内存",
+      storage: "512GB SSD", screen: "14.2英寸 Liquid Retina XDR 120Hz", battery: "72.4Wh",
+      weight: "1.61kg", thickness: "15.5mm", ports: "雷电4×3, HDMI, SD卡槽, MagSafe",
+      releaseDate: "2025-11", pros: ["M4芯片性能强", "续航逆天", "屏幕顶级", "剪视频神器"],
+      cons: ["价格贵", "游戏兼容性差", "内存不可升级"],
+      image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=600&h=400&fit=crop"
+    }
+  ]
+};
+
+var laptops = DATA.laptops;
+var currentBrand = "all";
+var compareMode = false;
+var selectedIds = [];
+var openDetailId = null;
+var io = null;
+
+function init() {
+  var brands = [];
+  for (var i = 0; i < laptops.length; i++) {
+    if (brands.indexOf(laptops[i].brand) === -1) brands.push(laptops[i].brand);
+  }
+  document.getElementById("brandCount").textContent = brands.length;
+  document.getElementById("modelCount").textContent = laptops.length;
+  document.getElementById("lastUpdate").textContent = DATA.updateDate;
+  document.getElementById("updateDate").textContent = DATA.updateDate;
+
+  document.getElementById("searchInput").addEventListener("input", doFilter);
+  document.getElementById("compareModeBtn").addEventListener("click", toggleCompareMode);
+  document.getElementById("clearCompareBtn").addEventListener("click", clearCompare);
+  document.getElementById("doCompareBtn").addEventListener("click", doCompare);
+  document.getElementById("modalCloseBtn").addEventListener("click", closeModal);
+  document.getElementById("modalOverlay").addEventListener("click", function(e) {
+    if (e.target === this) closeModal();
+  });
+
+  var filterBtns = document.querySelectorAll(".filter-btn");
+  for (var i = 0; i < filterBtns.length; i++) {
+    filterBtns[i].addEventListener("click", function() {
+      setBrand(this.getAttribute("data-brand"));
+    });
+  }
+
+  io = new IntersectionObserver(function(entries) {
+    for (var i = 0; i < entries.length; i++) {
+      if (entries[i].isIntersecting) {
+        entries[i].target.classList.add("in");
+        io.unobserve(entries[i].target);
+      }
+    }
+  }, { threshold: 0.12 });
+
+  var reveals = document.querySelectorAll(".reveal");
+  for (var i = 0; i < reveals.length; i++) {
+    io.observe(reveals[i]);
+  }
+
+  render();
+}
+
+function render() {
+  var searchInput = document.getElementById("searchInput");
+  var search = searchInput ? searchInput.value.toLowerCase().trim() : "";
+  var grid = document.getElementById("laptopGrid");
+  var noResult = document.getElementById("noResult");
+
+  var filtered = [];
+  for (var i = 0; i < laptops.length; i++) {
+    var l = laptops[i];
+    var matchBrand = currentBrand === "all" || l.brand === currentBrand;
+    var matchSearch = !search ||
+      l.model.toLowerCase().indexOf(search) !== -1 ||
+      l.brand.toLowerCase().indexOf(search) !== -1 ||
+      l.cpu.toLowerCase().indexOf(search) !== -1 ||
+      l.gpu.toLowerCase().indexOf(search) !== -1 ||
+      l.category.toLowerCase().indexOf(search) !== -1;
+    if (matchBrand && matchSearch) filtered.push(l);
+  }
+
+  document.getElementById("showCount").textContent = filtered.length;
+  document.getElementById("newCount").textContent = laptops.filter(function(l) { return l.isNew; }).length;
+  document.getElementById("dropCount").textContent = laptops.filter(function(l) { return l.oldPrice; }).length;
+
+  if (filtered.length === 0) {
+    grid.innerHTML = "";
+    noResult.classList.add("show");
+    return;
+  }
+  noResult.classList.remove("show");
+
+  var html = "";
+  for (var idx = 0; idx < filtered.length; idx++) {
+    var l = filtered[idx];
+    var isSelected = selectedIds.indexOf(l.id) !== -1;
+    var dropPct = l.oldPrice ? Math.round((1 - l.price / l.oldPrice) * 100) : 0;
+    var isOpen = openDetailId === l.id;
+
+    html += '<div class="laptop-card reveal ' + (isSelected ? "selected" : "") + '" style="transition-delay:' + (idx * 0.06) + 's">';
+    html += '<div class="card-tags">';
+    if (l.isNew) html += '<span class="tag-new">NEW</span>';
+    if (dropPct > 0) html += '<span class="tag-drop">↓' + dropPct + '%</span>';
+    html += '</div>';
+    html += '<div class="card-img">';
+    html += '<img src="' + l.image + '" alt="' + l.model + '">';
+    html += '<span class="img-fallback">💻</span>';
+    html += '</div>';
+    html += '<div class="card-body">';
+    html += '<div class="card-brand">' + l.brand.toUpperCase() + ' · ' + l.category + '</div>';
+    html += '<div class="card-model">' + l.model + '</div>';
+    html += '<div class="card-price-row">';
+    html += '<span class="card-price">¥' + l.price.toLocaleString() + '</span>';
+    if (l.oldPrice) html += '<span class="card-old-price">¥' + l.oldPrice.toLocaleString() + '</span>';
+    html += '</div>';
+    html += '<div class="card-specs">';
+    html += '<span class="spec-pill">' + l.cpu + '</span>';
+    html += '<span class="spec-pill">' + l.gpu + '</span>';
+    html += '<span class="spec-pill">' + l.ram + '</span>';
+    html += '<span class="spec-pill">' + l.screen.split(" ")[0] + '</span>';
+    html += '</div>';
+    html += '<div class="card-actions">';
+    html += '<button class="btn-detail" data-id="' + l.id + '">' + (isOpen ? "收起详情 ▲" : "查看详情 ▼") + '</button>';
+    if (compareMode) {
+      html += '<button class="btn-compare ' + (isSelected ? "selected" : "") + '" data-cid="' + l.id + '">' + (isSelected ? "已选择 ✓" : "加入对比") + '</button>';
+    }
+    html += '</div></div>';
+
+    html += '<div class="card-detail ' + (isOpen ? "open" : "") + '">';
+    html += '<div class="detail-inner">';
+    html += '<div class="detail-grid">';
+    html += '<div class="detail-item"><div class="label">CPU</div><div class="value">' + l.cpu + '</div></div>';
+    html += '<div class="detail-item"><div class="label">显卡</div><div class="value">' + l.gpu + '</div></div>';
+    html += '<div class="detail-item"><div class="label">内存</div><div class="value">' + l.ram + '</div></div>';
+    html += '<div class="detail-item"><div class="label">硬盘</div><div class="value">' + l.storage + '</div></div>';
+    html += '<div class="detail-item"><div class="label">屏幕</div><div class="value">' + l.screen + '</div></div>';
+    html += '<div class="detail-item"><div class="label">电池</div><div class="value">' + l.battery + '</div></div>';
+    html += '<div class="detail-item"><div class="label">重量/厚度</div><div class="value">' + l.weight + ' / ' + l.thickness + '</div></div>';
+    html += '<div class="detail-item"><div class="label">发布时间</div><div class="value">' + l.releaseDate + '</div></div>';
+    html += '</div>';
+    html += '<div class="detail-pros-cons">';
+    html += '<div class="pros-box"><div class="ttl">PROS</div>';
+    for (var p = 0; p < l.pros.length; p++) html += '<li>' + l.pros[p] + '</li>';
+    html += '</div>';
+    html += '<div class="cons-box"><div class="ttl">CONS</div>';
+    for (var c = 0; c < l.cons.length; c++) html += '<li>' + l.cons[c] + '</li>';
+    html += '</div>';
+    html += '</div></div></div>';
+    html += '</div>';
+  }
+
+  grid.innerHTML = html;
+
+  var detailBtns = grid.querySelectorAll(".btn-detail");
+  for (var i = 0; i < detailBtns.length; i++) {
+    detailBtns[i].addEventListener("click", function() {
+      toggleDetail(parseInt(this.getAttribute("data-id")));
+    });
+  }
+
+  var compareBtns = grid.querySelectorAll(".btn-compare");
+  for (var i = 0; i < compareBtns.length; i++) {
+    compareBtns[i].addEventListener("click", function() {
+      toggleSelect(parseInt(this.getAttribute("data-cid")));
+    });
+  }
+
+  var imgs = grid.querySelectorAll(".card-img img");
+  for (var i = 0; i < imgs.length; i++) {
+    imgs[i].addEventListener("error", function() {
+      this.style.display = "none";
+      this.parentNode.querySelector(".img-fallback").style.display = "inline";
+    });
+  }
+
+  var newReveals = grid.querySelectorAll(".reveal");
+  for (var i = 0; i < newReveals.length; i++) {
+    io.observe(newReveals[i]);
+  }
+}
+
+function toggleDetail(id) {
+  openDetailId = openDetailId === id ? null : id;
+  render();
+}
+
+function setBrand(brand) {
+  currentBrand = brand;
+  var filterBtns = document.querySelectorAll(".filter-btn");
+  for (var i = 0; i < filterBtns.length; i++) {
+    if (filterBtns[i].getAttribute("data-brand") === brand) {
+      filterBtns[i].classList.add("active");
+    } else {
+      filterBtns[i].classList.remove("active");
+    }
+  }
+  render();
+}
+
+function doFilter() {
+  render();
+}
+
+function toggleCompareMode() {
+  compareMode = !compareMode;
+  var btn = document.getElementById("compareModeBtn");
+  if (compareMode) {
+    btn.classList.add("active");
+    btn.textContent = "退出对比";
+  } else {
+    btn.classList.remove("active");
+    btn.textContent = "⚖️ 对比模式";
+    selectedIds = [];
+    updateCompareBar();
+  }
+  render();
+}
+
+function toggleSelect(id) {
+  var idx = selectedIds.indexOf(id);
+  if (idx !== -1) {
+    selectedIds.splice(idx, 1);
+  } else if (selectedIds.length < 2) {
+    selectedIds.push(id);
+  }
+  updateCompareBar();
+  render();
+}
+
+function updateCompareBar() {
+  var bar = document.getElementById("compareBar");
+  var num = document.getElementById("compareNum");
+  var chips = document.getElementById("compareChips");
+
+  if (selectedIds.length === 0) {
+    bar.classList.remove("show");
+    return;
+  }
+  bar.classList.add("show");
+  num.textContent = selectedIds.length;
+  var chipsHtml = "";
+  for (var i = 0; i < selectedIds.length; i++) {
+    var lid = selectedIds[i];
+    var l = null;
+    for (var j = 0; j < laptops.length; j++) {
+      if (laptops[j].id === lid) { l = laptops[j]; break; }
+    }
+    if (l) chipsHtml += '<span class="compare-chip">' + l.brand + " " + l.model + "</span>";
+  }
+  chips.innerHTML = chipsHtml;
+}
+
+function clearCompare() {
+  selectedIds = [];
+  updateCompareBar();
+  render();
+}
+
+function doCompare() {
+  if (selectedIds.length !== 2) return;
+  var a = null, b = null;
+  for (var i = 0; i < laptops.length; i++) {
+    if (laptops[i].id === selectedIds[0]) a = laptops[i];
+    if (laptops[i].id === selectedIds[1]) b = laptops[i];
+  }
+  if (!a || !b) return;
+
+  var rows = [
+    { label: "型号", key: "model" },
+    { label: "价格", key: "price", isPrice: true, lowerIsBetter: true },
+    { label: "分类", key: "category" },
+    { label: "CPU", key: "cpu" },
+    { label: "显卡", key: "gpu" },
+    { label: "内存", key: "ram" },
+    { label: "硬盘", key: "storage" },
+    { label: "屏幕", key: "screen" },
+    { label: "电池", key: "battery" },
+    { label: "重量", key: "weight", lowerIsBetter: true },
+    { label: "厚度", key: "thickness", lowerIsBetter: true },
+    { label: "发布时间", key: "releaseDate" }
+  ];
+
+  var html = '<table class="compare-table"><thead><tr><th>参数</th><th>' + a.brand + " " + a.model + '</th><th>' + b.brand + " " + b.model + '</th></tr></thead><tbody>';
+
+  for (var i = 0; i < rows.length; i++) {
+    var r = rows[i];
+    var va = a[r.key], vb = b[r.key];
+    var clsA = "", clsB = "";
+
+    if (r.isPrice) {
+      va = "¥" + a.price.toLocaleString();
+      vb = "¥" + b.price.toLocaleString();
+      if (a.price < b.price) clsA = "better-a";
+      else if (b.price < a.price) clsB = "better-b";
+    }
+
+    if (r.lowerIsBetter && !r.isPrice) {
+      var na = parseFloat(va), nb = parseFloat(vb);
+      if (!isNaN(na) && !isNaN(nb)) {
+        if (na < nb) clsA = "better-a";
+        else if (nb < na) clsB = "better-b";
+      }
+    }
+
+    html += '<tr><td style="font-weight:700">' + r.label + '</td><td class="' + clsA + '">' + va + '</td><td class="' + clsB + '">' + vb + '</td></tr>';
+  }
+
+  var aPros = "", bPros = "";
+  for (var i = 0; i < a.pros.length; i++) aPros += (i > 0 ? "<br>" : "") + "✓ " + a.pros[i];
+  for (var i = 0; i < b.pros.length; i++) bPros += (i > 0 ? "<br>" : "") + "✓ " + b.pros[i];
+  html += '<tr><td style="font-weight:700">优点</td><td>' + aPros + '</td><td>' + bPros + '</td></tr>';
+
+  var aCons = "", bCons = "";
+  for (var i = 0; i < a.cons.length; i++) aCons += (i > 0 ? "<br>" : "") + "✗ " + a.cons[i];
+  for (var i = 0; i < b.cons.length; i++) bCons += (i > 0 ? "<br>" : "") + "✗ " + b.cons[i];
+  html += '<tr><td style="font-weight:700">缺点</td><td>' + aCons + '</td><td>' + bCons + '</td></tr>';
+
+  html += '</tbody></table>';
+
+  document.getElementById("modalBody").innerHTML = html;
+  document.getElementById("modalOverlay").classList.add("show");
+}
+
+function closeModal() {
+  document.getElementById("modalOverlay").classList.remove("show");
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", init);
+} else {
+  init();
+}
+</script>
+</body>
+</html>
